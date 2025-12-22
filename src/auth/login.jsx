@@ -18,7 +18,6 @@ function Login() {
           mot_de_passe: mot_de_passe // 🔥 correspond EXACTEMENT au backend
         })
       });
-console.log(res.text())
       const data = await res.json();
       setMessage(data.message);
 
