@@ -8,25 +8,32 @@ function AdminDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost/esportmanagerbackend/api/Equipeadmin/get_equipe.php", {
-      credentials: "include"
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (!data.success) {
-          setError(data.message || "Erreur lors du chargement de l'équipe");
-        } else {
-          setEquipe(data.equipe);
+  fetch("http://localhost/esportmanagerbackend/api/Equipeadmin/get_equipe.php", {
+    credentials: "include"
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.success) {
+        setError(data.message || "Erreur lors du chargement de l'équipe");
+      } else {
+        setEquipe(data.equipe);
 
-          // 🔥 REDIRECTION AUTOMATIQUE VERS LE DASHBOARD DE L'ÉQUIPE
-          navigate(`/dashboardadmin/${data.equipe.id_equipe}`);
+        // ⚠️ Cas où l'admin n'a pas encore d'équipe
+        if (data.equipe === null) {
+          navigate("/AdminEquipecreate"); 
+          return;
         }
-      })
-      .catch(() => {
-        setError("Erreur de connexion au serveur");
-      })
-      .finally(() => setLoading(false));
-  }, []);
+
+        // 🔥 Cas normal : l'équipe existe
+        navigate(`/dashboardadmin/${data.equipe.id_equipe}`);
+      }
+    })
+    .catch(() => {
+      setError("Erreur de connexion au serveur");
+    })
+    .finally(() => setLoading(false));
+}, []);
+
 
   const styles = {
     container: {
