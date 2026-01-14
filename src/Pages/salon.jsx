@@ -81,54 +81,89 @@ function Salon({ user }) {
       <div style={styles.header}>
         <h1>🎮 ESport Manager</h1>
 
-        {/* BOUTON DECONNEXION */}
         <button style={styles.logoutBtn} onClick={handleLogout}>
           Déconnexion
         </button>
 
-        <p>Bienvenue dans le salon ! Choisis une section pour explorer l’univers e-sport.</p>
+        <p>Bienvenue dans le salon !</p>
         {user && <p>Connecté en tant que <strong>{user.pseudo}</strong> ({user.role})</p>}
       </div>
 
+      {/* NAVIGATION */}
       <div style={styles.nav}>
         <Link to="/equipes" style={styles.navLink}>Équipes</Link>
         <Link to="/joueurs" style={styles.navLink}>Joueurs</Link>
         <Link to="/tournois" style={styles.navLink}>Tournois</Link>
         <Link to="/actualites" style={styles.navLink}>Actualités</Link>
 
+        {/* SUPER ADMIN */}
         {user?.role === "super_admin" && (
-          <Link to="/admindashboard" style={styles.navLink}>⚙️ Administration</Link>
+          <Link to="/superadmindashboard" style={styles.navLink}>⚙️ Administration</Link>
+        )}
+
+        {/* ADMIN D'ÉQUIPE VALIDÉ */}
+        {user?.role === "admin_equipe" && user?.admin_valide === 1 && (
+          <Link to="/admindashboard" style={styles.navLink}>🛠️ Admin Équipe</Link>
         )}
       </div>
 
+      {/* SECTIONS PUBLIQUES */}
       <Link to="/equipes" style={styles.section}>
         <h2 style={styles.sectionTitle}>📌 Équipes</h2>
-        <p style={styles.sectionDesc}>Fiches complètes : nom, création, manager, logos, historique des joueurs.</p>
+        <p style={styles.sectionDesc}>Infos équipes, logos, historique.</p>
       </Link>
 
       <Link to="/joueurs" style={styles.section}>
         <h2 style={styles.sectionTitle}>👤 Joueurs</h2>
-        <p style={styles.sectionDesc}>Profils détaillés : pseudo, rôle, parcours, équipe actuelle.</p>
+        <p style={styles.sectionDesc}>Profils détaillés des joueurs.</p>
       </Link>
 
       <Link to="/tournois" style={styles.section}>
         <h2 style={styles.sectionTitle}>🏆 Tournois</h2>
-        <p style={styles.sectionDesc}>Infos tournois : jeu, dates, lieu, règles, équipes, résultats.</p>
+        <p style={styles.sectionDesc}>Infos tournois et résultats.</p>
       </Link>
 
       <Link to="/actualites" style={styles.section}>
         <h2 style={styles.sectionTitle}>📰 Actualités</h2>
-        <p style={styles.sectionDesc}>Dernières annonces : changements de roster, nouveaux tournois, actus importantes.</p>
+        <p style={styles.sectionDesc}>Dernières annonces e-sport.</p>
       </Link>
 
-      {user?.role === "super_admin" && (
-        <Link to="/admindashboard" style={styles.section}>
-          <h2 style={styles.sectionTitle}>⚙️ Administration</h2>
-          <p style={styles.sectionDesc}>
-            Crée des comptes, attribue des droits, gère les équipes, joueurs, tournois et actualités.
-          </p>
+      {/* DEMANDE ADMIN */}
+      {(user?.role === "visiteur" || user?.role === "super_admin") && (
+        <Link to="/demandeadmin" style={styles.section}>
+          <h2 style={styles.sectionTitle}>📥 Devenir Admin d'Équipe</h2>
+          <p style={styles.sectionDesc}>Envoyez une demande pour devenir admin.</p>
         </Link>
       )}
+
+      {/* SUPER ADMIN */}
+      {user?.role === "super_admin" && (
+        <Link to="/superadmindashboard" style={styles.section}>
+          <h2 style={styles.sectionTitle}>⚙️ Administration</h2>
+          <p style={styles.sectionDesc}>Gestion complète du site.</p>
+        </Link>
+      )}
+      
+      {user?.role === "admin_equipe" && user?.admin_valide == 1 && (
+  <Link to="/admindashboard" style={styles.section}>
+    <h2 style={styles.sectionTitle}>🛠️ Administration de votre équipe</h2>
+    <p style={styles.sectionDesc}>
+      Gérez les informations, joueurs et actualités de votre équipe.
+    </p>
+  </Link>
+)}
+
+
+      {/* ADMIN NON VALIDÉ */}
+      {user?.role === "admin_equipe" && user?.admin_valide === 0 && (
+        <div style={{ ...styles.section, background: "#fff3cd", borderLeft: "5px solid #ff9800" }}>
+          <h2 style={{ ...styles.sectionTitle, color: "#ff9800" }}>⏳ En attente de validation</h2>
+          <p style={styles.sectionDesc}>
+            Le Super Admin doit valider votre compte.
+          </p>
+        </div>
+      )}
+
     </div>
   );
 }

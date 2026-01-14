@@ -42,7 +42,7 @@ function MonEquipe() {
   // Charger l'équipe de l'admin
   useEffect(() => {
     const fetchEquipe = async () => {
-      const res = await fetch("http://localhost/esportmanagerbackend/admin_get_my_team.php", {
+      const res = await fetch("http://localhost/esportmanagerbackend/api/Equipe/admin_get_my_team.php", {
         credentials: "include"
       });
       const data = await res.json();
@@ -61,8 +61,8 @@ function MonEquipe() {
     e.preventDefault();
 
     const url = equipe?.id_equipe
-      ? "http://localhost/esportmanagerbackend/admin_update_team.php"
-      : "http://localhost/esportmanagerbackend/admin_create_team.php";
+      ? "http://localhost/esportmanagerbackend/api/Equipe/admin_update_team.php"
+      : "http://localhost/esportmanagerbackend/api/Equipe/admin_create_team.php";
 
     const res = await fetch(url, {
       method: "POST",

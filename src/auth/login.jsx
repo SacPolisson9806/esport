@@ -9,7 +9,7 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("http://localhost/esportmanagerbackend/api/login.php", {
+      const res = await fetch("http://localhost/esportmanagerbackend/api/Utilisateur/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

@@ -9,7 +9,7 @@ function AdminCreateUser() {
   const [message, setMessage] = useState("");
 
   const handleCreate = async () => {
-    const res = await fetch("http://localhost/esportmanagerbackend/create_user.php", {
+    const res = await fetch("http://localhost/esportmanagerbackend/api/Utilisateur/create_user.php", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ pseudo, email, mot_de_passe: motDePasse, role, permissions })

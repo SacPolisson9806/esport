@@ -35,7 +35,7 @@ function Equipes() {
 
   useEffect(() => {
     const fetchEquipes = async () => {
-      const res = await fetch("http://localhost/esportmanagerbackend/equipes_get_all.php");
+      const res = await fetch("http://localhost/esportmanagerbackend/api/Equipe/equipes_get_all.php");
       const data = await res.json();
       if (data.success) setEquipes(data.equipes);
     };
